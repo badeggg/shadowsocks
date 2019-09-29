@@ -29,7 +29,7 @@ import random
 from shadowsocks import cryptor, eventloop, shell, common
 from shadowsocks.common import parse_header, onetimeauth_verify, \
     onetimeauth_gen, ONETIMEAUTH_BYTES, ONETIMEAUTH_CHUNK_BYTES, \
-    ONETIMEAUTH_CHUNK_DATA_LEN, ADDRTYPE_AUTH
+    ONETIMEAUTH_CHUNK_DATA_LEN, ADDRTYPE_AUTH, to_bytes
 
 # we clear at most TIMEOUTS_CLEAN_SIZE timeouts each time
 TIMEOUTS_CLEAN_SIZE = 512
@@ -157,7 +157,7 @@ class TCPRelayHandler(object):
     def _twist_password(self, password):
         append = str(int(float(time.time())))[:-2]
         logging.info('twist: ' + append)
-        return password + append
+        return password + to_bytes(append)
 
     def __hash__(self):
         # default __hash__ is id / 16
