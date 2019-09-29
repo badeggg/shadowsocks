@@ -40,7 +40,7 @@ def main():
     config = shell.get_config(True)
     daemon.daemon_exec(config)
 
-    logging.info("starting local at %s:%d" %
+    logging.info("starting ---twist--- local at %s:%d" %
                  (config['local_address'], config['local_port']))
 
     dns_resolver = asyncdns.DNSResolver()

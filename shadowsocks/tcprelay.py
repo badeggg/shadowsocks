@@ -127,7 +127,7 @@ class TCPRelayHandler(object):
         # if is_local, this is sslocal
         self._is_local = is_local
         self._stage = STAGE_INIT
-        self._cryptor = cryptor.Cryptor(config['password'],
+        self._cryptor = cryptor.Cryptor(self._twist_password(config['password']),
                                         config['method'],
                                         config['crypto_path'])
         self._ota_enable = config.get('one_time_auth', False)
@@ -153,6 +153,11 @@ class TCPRelayHandler(object):
                  self._server)
         self.last_activity = 0
         self._update_activity()
+
+    def _twist_password(self, password):
+        append = str(int(float(time.time())))[:-2]
+        logging.info('twist: ' + append)
+        return password + append
 
     def __hash__(self):
         # default __hash__ is id / 16
