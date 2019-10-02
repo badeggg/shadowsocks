@@ -335,6 +335,8 @@ def get_config(is_local):
     config['tunnel_remote_port'] = config.get('tunnel_remote_port', 53)
     config['tunnel_port'] = config.get('tunnel_port', 53)
 
+    config['trusted_ips'] = config.get('trusted_ips', [])
+
     logging.getLogger('').handlers = []
     logging.addLevelName(VERBOSE_LEVEL, 'VERBOSE')
     if config['verbose'] >= 2:

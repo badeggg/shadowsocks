@@ -571,6 +571,15 @@ class TCPRelayHandler(object):
             if eventloop.errno_from_exception(e) in \
                     (errno.ETIMEDOUT, errno.EAGAIN, errno.EWOULDBLOCK):
                 return
+
+        peer_ip = self._local_sock.getpeername()[0]
+        if self._config['trusted_ips'].count(peer_ip) == 0:
+            logging.warn('=============')
+            logging.warn('bad try maybe from gfw %s' % peer_ip)
+            logging.warn('data: \n%s' % data)
+            logging.warn('decrypted data: \n%s' % self._cryptor.decrypt(data))
+            logging.warn('-------------')
+
         if not data:
             self.destroy()
             return
